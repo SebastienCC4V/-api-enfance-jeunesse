@@ -1,0 +1,108 @@
+  
+  /*
+  DEV : Sébastien Lebreton
+  Application pour les ervices de la CC4V
+  */
+/*---------------VARIABLES-------------------*/
+:root { 
+    --C1:#D5DA31;
+    --C2:#8DC048;
+    --C3:#00974A;
+    --C4:#0E0F0E;
+    --C5:#0092b3;
+    --C6:#f4c6b5;
+    --C7:#814494;
+    --C8:lightgrey;
+    --C9:white;
+
+
+    --padding:4rem;
+    --margin:2rem;
+}
+/*---------------fin VARIABLES------------------*/
+
+.bgc1{
+    background-color: var(--C1);
+}
+.bgc2{
+    background-color: var(--C2);
+}
+.bgc3{
+    background-color: var(--C3);
+}
+.bgc4{
+    background-color: var(--C4);
+}
+.bgc5{
+    background-color: var(--C5);
+}
+.bgc6{
+    background-color: var(--C6);
+}
+.bgc7{
+    background-color: var(--C7);
+}
+.bgc8{
+    background-color: var(--C8);
+}
+.bgc9{
+    background-color: var(--C9);
+}
+.padding{
+    padding: var(--padding);
+}
+.margin{
+    margin: var(--margin);
+}
+*{
+    text-decoration: none;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+body{
+      justify-content: center;
+      align-items: center;
+}
+h1, h2, h3{
+    text-transform: uppercase;
+    font-weight: bold;   
+}
+
+/*---------------portail-------------------*/
+.logoCC4V{
+    max-width: 30%;
+}
+
+.user-choice-container{
+   gap: 48px;
+   justify-content: center;
+   align-items: center;   
+}
+
+.user-choice {
+  
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(23,115,176,0.11);
+  padding: 36px 55px;
+  font-size: 1.6em;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  border: none;
+  outline: none;
+  min-width: 170px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 2px;
+}
+.user-choice.rpe {
+    color: #fff;}
+.user-choice.alsh { 
+    color: #fff;}
+.user-choice.jeunesse {
+    color: #fff;}
+
+/*---------------fin portail-------------------*/

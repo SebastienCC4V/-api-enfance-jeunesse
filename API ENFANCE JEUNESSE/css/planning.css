@@ -1,0 +1,742 @@
+
+:root { 
+    --C1:#D5DA31;
+    --C2:#8DC048;
+    --C3:#00974A;
+    --C4:#0E0F0E;
+    --C5:#0092b3;
+    --C6:#f4c6b5;
+    --C7:#814494;
+    --C8:lightgrey;
+    --C9:white;
+    --C10:#6b6b6b;
+    --C11 :#da7289;
+
+    --padding:4rem;
+    --margin:2rem;
+}
+/*---------------fin VARIABLES------------------*/
+
+.bgc1{
+    background-color: var(--C1) !important;
+}
+.bgc2{
+    background-color: var(--C2) !important;
+}
+.bgc3{
+    background-color: var(--C3) !important;
+}
+.bgc4{
+    background-color: var(--C4) !important;
+}
+.bgc5{
+    background-color: var(--C5) !important;
+}
+.bgc6{
+    background-color: var(--C6) !important;
+}
+.bgc7{
+    background-color: var(--C7) !important;
+}
+.bgc8{
+    background-color: var(--C8) !important;
+}
+.bgc9{
+    background-color: var(--C9) !important;
+}
+.padding{
+    padding: var(--padding);
+}
+.margin{
+    margin: var(--margin);
+}
+.TAcenter{
+  margin: auto;
+}
+
+*{
+    text-decoration: none;
+    font-family: 'Open Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--C8);
+  font-family: 'Open Sans', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.5em;
+}
+
+p{
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 30px;
+  gap: 28px;
+}
+
+/* -----------------------------------CONTROL PANEL PARTS-----------------------------------------------------*/
+
+
+.tool-panel {
+  width: 210px;
+  min-height: 810px;
+  background: var(--C9);
+  border-radius: 16px;
+  box-shadow: 0 0 10px var(--C4);
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tool-panel h2 {
+  font-size: 1.15em;
+  margin: 0 0 14px 0;
+  color: var(--C5);
+}
+
+.tool-panel p {
+  color: var(--C10);
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.champDate{
+  width: 100%;
+}
+
+.date-input {
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 4px;
+  margin: auto;
+  padding: 5px;
+}
+
+/* ---------------------------NOUVEAU: Styles pour le Surlignage du Texte-------------------------- */
+
+.highlight-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* Utilisation d'un dégradé pour simuler un "marqueur" ou une icône */
+    background: linear-gradient(to top right, #fff 50%, var(--C8) 50%); 
+    position: relative;
+    overflow: hidden;
+}
+
+/* Base de surlignage : l'élément <mark> créé par le JS */
+/* Note : Nous utilisons <span> ou <mark> avec la classe pour une meilleure compatibilité */
+.highlight-manual { background-color: var(--C1); }
+.highlight-sport { background-color: var(--C2); }
+.highlight-art { background-color: var(--C6); }
+.highlight-coocking { background-color: var(--C11); }
+
+
+/* Classes pour l'application réelle sur le texte sélectionné */
+
+/* 1. Surlignage avec Texte NOIR (Pour couleurs claires: manual) */
+
+
+/* 2. Surlignage avec Texte BLANC (Pour couleurs foncées/sombres) */
+.h-manual { background-color: var(--C1); color: var(--C4); }
+.h-sport { background-color: var(--C2); color:var(--C4); } 
+.h-art { background-color: var(--C6); color: var(--C4); } 
+.h-coocking { background-color: var(--C11); color:var(--C4); }
+
+/* Styles pour les boutons colorés eux-mêmes (petit indicateur de couleur) */
+.highlight-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    opacity: 0.8;
+}
+.highlight-btn[data-color="manual"]::after { background-color: var(--C1); }
+.highlight-btn[data-color="sport"]::after { background-color:var(--C2); }
+.highlight-btn[data-color="art"]::after { background-color: var(--C6); }
+.highlight-btn[data-color="coocking"]::after { background-color:var(--C11); }
+
+/*----------------------Bouton de choix de couleur de cellule --------------------------*/
+.color-apply-btn {
+    position: absolute;
+    bottom: 5px; /* Ajuster la position en haut */
+    left: 0px; /* Ajuster la position à droite */
+    width: 20px;
+    height: 20px;
+    background: var(--C5); /* Couleur du bouton par défaut (Bleu) */
+    border: 2px solid var(--C9); /* Bordure blanche pour le contraste */
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10; /* Toujours visible */
+    padding: 0;
+    line-height: 20px; /* Centrer le texte/symbole */
+    text-align: center;
+    font-size: 10px;
+    color: var(--C9);
+    box-shadow: 0 1px 3px var(--C4);
+    transition: transform 0.1s;
+    font-weight: bold;
+}
+
+.color-apply-btn::before {
+    content: '✓'; /* Symbole d'application */
+}
+
+.color-apply-btn:hover {
+    transform: scale(1.1);
+    background: var(--C7);
+}
+
+/* planning.css : S'assurer que les classes existent et fonctionnent */
+.text-white {
+  color: var(--C9) !important; /* var(--C9) est white. C'est correct. */
+}
+.text-black {
+  color: var(--C4) !important; /* var(--C4) est #0E0F0E (noir). C'est correct. */
+}
+
+
+/*-----------------------  NOUVEAU: Style du panneau de contrôle d'image -----------------------------*/
+.image-control-section h4 {
+    color: var(--C5);
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.img-control-btn {
+    width: 35px;
+    height: 35px;
+    margin: 3px;
+    border: 1px solid var(--C8);
+    background-color: var(--C9);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.img-control-btn:hover {
+    background-color: var(--C8);
+    transform: scale(1.05);
+}
+
+.img-control-btn:active, .img-control-btn.active {
+    background-color: var(--C5);
+    color: var(--C9);
+    border-color: var(--C5);
+}
+
+.image-preview-js {
+    /* ... (styles existants : width, height, object-fit) ... */
+    
+    /* NOUVEAU : Point d'origine de la transformation (centre) */
+    transform-origin: 50% 50%; 
+    /* NOUVEAU : Transition douce pour le zoom */
+    transition: transform 0.2s ease-out, object-position 0.2s ease-out; 
+    
+    /* Essentiel pour que l'image zoomée ne 'cache' pas d'autres éléments */
+    z-index: 1; 
+}
+
+/* Visuel pour l'image sélectionnée */
+.image-preview-js.selected-image-for-control {
+    box-shadow: 0 0 0 3px var(--C5); /* Bordure bleue pour indiquer l'image active */
+    transition: box-shadow 0.2s;
+}
+
+
+/* -------------------------------------------------------------------Zone A4 -------------------------------------------------------*/
+/*----------------------------------PAGINATION SYSTEM----------------------------*/
+.all-pages-container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px; /* Espace entre chaque page A4 */
+    position: relative;
+}
+
+/* 1. Rendre le conteneur des pages capable de gérer la position absolue */
+#all-pages-container {
+    position: relative; 
+    height: 850px; /* À ajuster si nécessaire */
+    overflow: hidden; 
+}
+.a4-canvas {
+  width: 1122px;
+  height: 793px;
+  background: var(--C9);
+  box-shadow: 0 0 22px var(--C4);
+  border-radius: 16px;
+  overflow: hidden;
+  display: block;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s;
+  position: relative; 
+}
+
+/* 3. Afficher uniquement la page actuelle */
+.a4-canvas.current-page {
+    /* Ne pas mettre de style ici, le JavaScript gère l'affichage directement via style.display */
+}
+
+
+/* Voile blanc semi-transparent pour la lisibilité pour l'aplication du background */
+.a4-canvas::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; width: 100%; height: 100%;
+  background: rgba(255,255,255,0.82);
+  z-index: 0;
+  pointer-events: none;
+  transition: background 0.5s;
+}
+.a4-canvas > * { position: relative; z-index: 1; }
+
+
+/* RÈGLES SIMPLIFIÉES POUR LES BOUTONS DE NAVIGATION */
+.thumbnail-wrapper {
+    /* Style pour le conteneur/bouton de pagination */
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 3px solid var(--C8); /* Bordure légère */
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--C9); /* Fond blanc */
+    transition: all 0.2s;
+}
+
+.thumbnail-wrapper:hover {
+    background-color: var(--C8); /* Effet au survol */
+}
+
+.thumbnail-wrapper.active {
+    /* Bouton actif */
+    border-color: var(--C5); /* Bordure de couleur pour l'actif */
+    background-color: var(--C9);
+}
+
+.thumbnail-label {
+    /* Style pour le texte "Page X" */
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--C4);
+}
+
+/* ---------------------------Zone header -----------------------------*/
+.headerZone {
+ 
+  height: 110px;
+  margin-bottom: 12px;
+  margin: auto;
+}
+.logoContainer{
+  width:100% ;
+}
+
+.header-form {
+  text-align: left;
+  margin: 0;
+ 
+
+}
+
+.header-form select,
+.header-form input[type="text"] {
+  border-radius: 0px;
+  border: 0px;
+  margin:0;
+  padding: 0;
+  background: none;
+  
+}
+#niveau, #lieu, #vacances {
+  text-transform: uppercase;
+  font-size: 1.5em;
+  font-weight: bold;
+  display: inline-block;
+  box-sizing: border-box;
+}
+#lieu {
+  background-color: var(--C2);
+}
+
+#lieu-width-helper {
+  visibility: hidden;
+  position: absolute;
+  white-space: pre;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+#theme, .theme{
+  font-weight: bold;
+}
+
+#theme{
+  width: 300px;
+}
+
+/* -----------------------------Tableau planning ------------------------------*/
+.tableau{
+  width: 900px;
+  display: block;
+}
+
+.first-row-rounded {
+  color: var(--C9);
+  text-transform: uppercase;
+  font-weight: bold;
+  height: 40px;
+  border-top-left-radius: 150px;
+  border-top-right-radius: 150px;
+  margin:auto;
+  margin-top: 30px;
+  padding-top: 15px;
+  width: 120px;
+  line-height: 1;
+}
+
+.ligneTab{
+  color: var(--C9);
+  margin: auto;
+  border: var(--C4) solid 2px;
+  text-transform: uppercase;  
+  font-weight: bold;
+}
+.cellule:first-child{
+   border-left: var(--C4) solid 2px;
+}
+
+.cellule{
+  width: 177px;
+  height: 200px;
+  border-right: var(--C4) solid 2px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.celluleColor{
+  background-color: var(--C9);
+}
+
+
+/* NOUVEAU STYLE POUR contenteditable (remplace le textarea) --------------------------- */
+.zoneTexte {
+    /* Style de base de tes anciens textarea */
+    /* Mettre une hauteur fixe et non min-height */
+    height: 110px;
+    width: 100%;
+    padding: 5px;
+    /* Rétablit l'ascenseur lorsque le contenu dépasse */
+    overflow-y: hidden; 
+    box-sizing: border-box; /* S'assurer que le padding ne dépasse pas la hauteur de 75px */
+    font-size: 12px;
+    line-height: 1.5;
+    background-color: transparent !important;
+   
+}
+
+/* Style pour simuler le placeholder sur le div contenteditable */
+.zoneTexte:empty:before {
+    content: attr(data-placeholder);
+    color: var(--C8);
+    /* Rendre le placeholder non cliquable pour pouvoir taper du texte */
+    pointer-events: none; 
+}
+
+/* S'assurer que le texte mis en gras par l'éditeur est bien en gras */
+.zoneTexte strong {
+    font-weight: bold;
+}
+
+.editable{
+  background-color: transparent !important;
+}
+/* --------------------------------------- ZONE IMAGE ------------------------------------------*/
+/* Cache l'input natif qui est difficile à styliser */
+.file-input-js {
+    opacity: 0;           /* Rend l'élément complètement transparent */
+    position: absolute;   /* Le sort du flux du document pour qu'il n'occupe pas d'espace */
+    z-index: -1;          /* Place-le sous les autres éléments (le label) */
+    width: 1px;           /* Réduit sa taille au minimum */
+    height: 1px;
+    overflow: hidden;     /* Cache tout ce qui pourrait dépasser */
+}
+
+/* Style de la zone cliquable (le label) */
+.custom-image-upload {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 135px; /* Définissez la taille de votre champ image */
+    height: 80px;
+    border: 2px dashed var(--C8); /* Bordure stylée comme un champ */
+    border-radius: 5px;
+    background-color: var(--C9);
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.3s;
+    position: relative;
+}
+
+.custom-image-upload:hover {
+    border-color: var(--C5); /* Effet au survol */
+}
+
+/* Style de l'icône par défaut */
+.upload-icon {
+    font-size: 3em;
+    color: var(--C8);
+    margin-bottom: 10px;
+}
+
+/* Assurez-vous que le label est la référence pour le positionnement */
+.custom-image-upload {
+    position: relative; /* Indispensable pour que le cadre et l'image se positionnent absolument à l'intérieur */
+    /* ... (vos autres styles) */
+}
+
+/* Le Cadre : C'est la fenêtre fixe ! */
+.image-frame-js {
+    width: 100%; 
+    height: 100%; 
+    position: absolute; /* Positionné par rapport au .custom-image-upload */
+    top: 0;
+    left: 0;
+    /* La propriété CRUCIALE pour fixer le cadre et masquer le débordement lors du zoom */
+    overflow: hidden; 
+}
+
+/* L'Image : Elle reçoit le zoom et se positionne à l'intérieur du cadre */
+.image-preview-js {
+    /* L'image doit se positionner absolument par rapport au .image-frame-js */
+    position: absolute; 
+    top: 0;
+    left: 0;
+    
+    /* Elle remplit 100% de la taille de son parent (.image-frame-js) */
+    width: 100%; 
+    height: 100%; 
+    
+    /* Conserver vos styles de rendu et transition */
+    object-fit: contain; /* ou cover, selon votre choix par défaut */
+    transition: transform 0.3s ease; 
+}
+
+/* ---------------------------------------FIN DE ZONE IMAGE ------------------------------------------*/
+/* ---------------Légende plus petite --------------*/
+.legend-planning {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  font-size: 8px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 4px;
+}
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.2px solid #aaa;
+  display: inline-block;
+}
+.manual { background:var(--C1) }
+.sport { background: var(--C2); }
+.art { background: var(--C6); }
+.cooking { background: var(--C11) }
+.outing { background: var(--C7)!important; }
+.closed { background: var(--C5)!important; }
+.closed-label { color: var(--C5); font-weight: bold; }
+
+/* -----------------------------------------------------------------------FOOTER ----------------------------------------------------------------------*/
+
+
+/* Style du pied de page pour la numérotation et la date */
+.page-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 20px; /* Déplacé à gauche pour le flexbox */
+    right: 20px; /* Déplacé à droite pour le flexbox */
+    font-size: 10px;
+    color: var(--C10);
+    z-index: 1; 
+    
+    /* GESTION DE L'ALIGNEMENT AU CENTRE */
+    display: flex;
+    justify-content: space-between; /* Aligner les éléments aux extrémités */
+    align-items: center;
+}
+
+/* Conteneur de la date pour le centrage */
+.date-input-container {
+    flex-grow: 1; /* Permet au conteneur de prendre l'espace disponible */
+    text-align: center; /* Centre le contenu (label + input) */
+}
+
+/* Ajustement de l'input de date */
+.date-input-per-page {
+    font-size: 10px;
+    padding: 2px;
+    border: 1px solid var(--C8);
+    border-radius: 3px;
+    width: 100px; /* Taille réduite */
+    margin-left: 5px;
+}
+
+
+/* ----------------------------------------------------NOUVEAU: Styles pour le panneau de pagination de droite----------------------------------------------------------------- */
+.pagination-panel {
+    width: 210px;
+    min-height: 810px; 
+    background: var(--C9);
+    border-radius: 16px;
+    box-shadow: 0 0 10px var(--C4);
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-height: 90vh; 
+    overflow-y: auto; 
+    position: sticky; 
+    top: 30px; 
+}
+
+/* Conteneur et Wrapper des Miniatures */
+.thumbnail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 5px;
+}
+
+.page-thumbnail-wrapper {
+    border: 3px solid transparent; 
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+    background-color: var(--C9);
+    padding: 4px; 
+}
+
+.page-thumbnail-wrapper.active-thumbnail {
+    border-color: var(--C5);
+    box-shadow: 0 0 0 3px var(--C5); 
+}
+
+/* Miniature elle-même (le contenu A4 réduit) */
+.page-thumbnail {
+    width: 1122px; 
+    height: 793px; 
+    transform-origin: 0 0;
+    pointer-events: none; 
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box; 
+    border-radius: 4px; 
+    
+    /* Réduction à la taille de la miniature (≈ 0.1604) */
+    transform: scale(0.1604); 
+    /* Compensation de l'espace blanc */
+    margin-bottom: -666px; 
+}
+
+.thumbnail-label {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--C10);
+    padding-bottom: 5px;
+}
+
+/* --------------------------------------------- Responsive : réduit la taille sur petits écrans------------------------------------ */
+@media (max-width: 1400px) {
+  .a4-canvas {
+    width: 900px;
+    height: 636px;
+    font-size: 0.92em;
+  }
+  .tool-panel {
+    min-height: 650px;
+    font-size: 0.95em;
+  }
+}
+@media print {
+  body, html {
+    background: none !important;
+  }
+  .tool-panel {
+    display: none !important;
+  }
+  .a4-canvas {
+    box-shadow: none !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    padding: 0 !important;
+    background-image: none !important;
+  }
+  .a4-canvas::before {
+    background: none !important;
+  }
+  .a4-canvas.hidden-page {
+    display: block !important; /* IMPORTANT: Afficher toutes les pages à l'impression */
+    page-break-after: always; /* Saut de page après chaque planning */
+  }
+}

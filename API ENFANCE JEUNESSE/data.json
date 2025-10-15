@@ -1,0 +1,31 @@
+{
+  "planning-1": {
+    "id": "planning-1",
+    "type": "alsh",
+    "cellsContent": {
+      "zoneTexte1": "",
+      "zoneTexte2": "",
+      "zoneTexte3": "",
+      "zoneTexte4": "",
+      "zoneTexte5": "",
+      "zoneTexte6": "",
+      "zoneTexte7": "",
+      "zoneTexte8": "",
+      "zoneTexte9": "",
+      "zoneTexte10": "",
+      "zoneTexte1_p1": "YO YO YO&nbsp;",
+      "zoneTexte2_p1": "",
+      "zoneTexte3_p1": "",
+      "zoneTexte4_p1": "",
+      "zoneTexte5_p1": "",
+      "zoneTexte6_p1": "",
+      "zoneTexte7_p1": "",
+      "zoneTexte8_p1": "",
+      "zoneTexte9_p1": "",
+      "zoneTexte10_p1": ""
+    },
+    "cellColors": {},
+    "totalPages": 1,
+    "currentPageNumber": 1
+  }
+}

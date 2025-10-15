@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Planning Hebdomadaire avec Outils</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="css/planning.css">
+  <link rel="stylesheet" href="css/flexboxgrid.css">
+</head>
+<body>
+  <div class="main-layout">
+
+    <!-- Zone Outils ------------------------------------------------------------------------------------------------------------ -->
+    <aside class="tool-panel">
+      <div class="center-xs">
+        <h2>Outils</h2>
+        <button>Exporter PDF</button>
+        <button>Exporter JPG</button>
+      </div>
+      <div class="center-xs" style="margin-top: 20px;">
+          <h2>💾 Sauvegarde en Ligne</h2>
+          <p>Sauvegardez l'état actuel de votre planning sur le serveur.</p>
+          <button id="save-btn" style="margin-top: 10px;">
+              Sauvegarder en ligne
+          </button>
+          <p style="margin-top: 15px;">**ID du Planning :** <span id="current-planning-id">Non sauvegardé</span></p>
+          <button id="load-btn" style="margin-top: 10px;">Charger un planning par ID</button>
+      </div>
+      <hr>
+      
+    
+      <!-- Texte en gras --------------------------------------- -->      
+
+      <div class="center-xs">
+        <h4>✏️ Mettre le texte en gras</h4>
+        <p>Selectionnez le texte et appuyez sur le bouton pour mettre/enlever le <strong>gras</strong></p>
+        <button id="boldToggle" onmousedown="return false;">Gras (ctrl+B)</button>
+      </div>
+      
+      <!-- Texte en surligné de couleur --------------------------------------- -->  
+
+      <div class="text-highlight-section center-xs" style="margin-top: 15px;">
+        <h4>✏️ Surligner le texte selon l'activité</h4>
+        <p>Sélectionnez le texte à surligner.</p>
+        <div class="row around-xs" style="margin-top: 10px;">
+            <button class="highlight-btn highlight-manual" data-color="manual" title="Effacer/Manuel (Jaune)">🎨 Effacer</button>
+            <button class="highlight-btn highlight-sport" data-color="sport" title="Sport (Vert Clair)">⚽ Sport</button>
+            <button class="highlight-btn highlight-art" data-color="art" title="Art (Vert Foncé)">🎭 Art</button>
+            <button class="highlight-btn highlight-coocking" data-color="coocking" title="Culinaire (Rose)">🍲 Cuisine</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- couleur de fond de cellule ------------------------------- -->
+      <div class="center-xs">
+        <h4>🎨 CENTRE FERMÉ OU EN EXTÉRIEUR ?</h4>
+        <label for="couleurCellule"><p>Choisissez l'option et cliquez sur le bouton de cellule correspondant:</p></label>
+        <select id="couleurCellule" name="couleurCellule">
+          <option value="celluleColor">Effacer la couleur (Blanc)</option>
+          <option value="outing">Sortie</option>
+          <option value="closed">Fermé</option>
+        </select>
+      </div>
+
+      <!-- control d'images ------------------------------- -->   
+      <div class="image-control-section center-xs">
+        <h4>🖼️ Contrôle des Images</h4>
+        
+        <label for="imageSelector"><p>1. Choisir l'image à modifier :</p></label>
+        <select id="imageSelector" style="width: 100%; margin-bottom: 15px;">
+            <option value="">Sélectionnez une cellule...</option>
+            </select>
+
+        <p>2. Ajuster la Position et la Taille :</p>
+        
+        <div class="row center-xs image-controls-group" style="margin-top: 10px;">
+            <button class="img-control-btn pos-top" data-control="position" data-value="50% 0%" title="Aligner en haut">⬆️</button>
+            <button class="img-control-btn pos-left" data-control="position" data-value="0% 50%" title="Aligner à gauche">⬅️</button>
+            <button class="img-control-btn pos-center" data-control="position" data-value="50% 50%" title="Centrer">⏺️</button>
+            <button class="img-control-btn pos-right" data-control="position" data-value="100% 50%" title="Aligner à droite">➡️</button>
+            <button class="img-control-btn pos-bottom" data-control="position" data-value="50% 100%" title="Aligner en bas">⬇️</button>
+        </div>
+        
+        <div class="row center-xs image-controls-group" style="margin-top: 15px;">    
+            <button class="img-control-btn zoom-in" data-control="zoom" data-value="in" title="Zoomer l'image (Agrandir)">➕</button>            
+            <button class="img-control-btn zoom-out" data-control="zoom" data-value="out" title="Dézoomer l'image (Réduire)">➖</button>
+            <div style="width: 10px;"></div> <button class="img-control-btn fit-cover" data-control="fit" data-value="cover" title="Remplir le bloc (Crop)">🔳</button>
+            <button class="img-control-btn fit-contain" data-control="fit" data-value="contain" title="Afficher l'image entière (Bordures)">🔲</button>
+        </div>
+      </div>
+
+      
+
+
+    </aside>
+
+    <!-- Zone Planning A4------------------------------------------------------------------------------------------------ -->
+     
+    <div id="all-pages-container" class="all-pages-container">
+      <main class="a4-canvas current-page" id="planning-container" data-page-number="1">
+        <!--Zone header--------------------------------------------------------------------------------------->
+         
+        <div class="headerZone row middle-xs center-xs">
+
+          <div class="logoLeft col-xs-3">
+            <img class="logoContainer" src="images/logoAlsh.png" alt="">
+          </div>
+
+        
+          <form class="header-form col-xs-6" autocomplete="off">
+            <div class="row  middle-xs headerTitle">
+              <div class="col-xs-è"><h1>Programmation</h1></div>              
+              <select id="niveau" name="niveau" class="col-xs-5">
+                <option value="primaire">Maternelles</option>
+                <option value="elementaire">Élémentaires</option>
+              </select>
+            </div>
+
+            <div class="">
+              <select id="lieu" name="lieu">
+                <option value="ecole1">Dordives</option>
+                <option value="ecole2">Corbeilles</option>
+                <option value="ecole3">Ferrières-en-Gâtinais</option>
+                <option value="ecole4">Nargis</option>
+              </select>
+              <span id="lieu-width-helper"></span>
+            </div>
+
+            <div class="">
+                <select id="vacances" name="vacances">
+                <option value="noel">Vacances de Noël 2025</option>
+                <option value="hiver">Vacances d'hiver 2026</option>
+                <option value="paques">Vacances de Pâques 2026</option>
+                <option value="printemps">Vacances de printemps 2026</option>
+                <option value="ete">Vacances d'été 2026</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <label for="theme" class=" theme">Thème :</label>
+              <input type="text" id="theme" name="theme" placeholder="Ex : Carnaval de Rio" class="">
+            </div>
+
+          </form>
+        
+          <div class="logoRight col-xs-3">
+            <img class="logoContainer" src="images/logoCC4V.png" alt="">
+          </div>
+        </div>
+
+        <!-- Tableau du planning zone body----------------------------------------------------------------------- -->
+        <div class="TAcenter tableau" >
+          <div class="row">          
+            <div class="first-row-rounded bgc7 center-xs"><h4>Lundi</h4>
+              <div id="date-lundi-aff"></div></div>
+            <div class="first-row-rounded bgc5 center-xs"><h4>Mardi</h4>
+              <div id="date-mardi-aff"></div></div>
+            <div class="first-row-rounded bgc6 center-xs"><h4>Mercredi</h4>
+              <div id="date-mercredi-aff"></div></div>
+            <div class="first-row-rounded bgc2 center-xs"><h4>Jeudi</h4>
+              <div id="date-jeudi-aff"></div></div>
+            <div class="first-row-rounded bgc7 center-xs"><h4>Vendredi</h4>
+              <div id="date-vendredi-aff"></div></div>                 
+          </div>
+
+          <div class="ligneTab bgc5"><h5>Accueil à partir de 07:30 - 09:00</h5></div>
+
+          <!-- Matinée -------------------------------------------------------------------------------------------------->
+          
+          <div class="row center-xs middle-xs matin">
+            <!-- LUNDI MATIN-->
+            <div class="cellule celluleColor" id="cellule1">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte1" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>            
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput1" name="image1" accept="image/*" class="file-input-js">
+                  <label for="imageInput1" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-1">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+            <!-- MARDI MATIN-->
+            <div class="cellule celluleColor" id="cellule2">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte2" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput2" name="image2" accept="image/*" class="file-input-js">
+                  <label for="imageInput2" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-2">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+            <!-- MERCREDI MATIN-->
+            <div class="cellule celluleColor" id="cellule3">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte3" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput3" name="image3" accept="image/*" class="file-input-js">
+                  <label for="imageInput3" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-3">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+
+            <!-- JEUDI MATIN-->
+            <div class="cellule celluleColor" id="cellule4">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte4" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>            
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput4" name="image4" accept="image/*" class="file-input-js">
+                  <label for="imageInput4" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-4">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+            <!-- VENDREDI MATIN-->
+            <div class="cellule celluleColor" id="cellule5">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte5" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>            
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput5" name="image5" accept="image/*" class="file-input-js">
+                  <label for="imageInput5" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-5">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="ligneTab bgc5"><h5>Midi - Pause déjeuner - jusqu'à 13 h 30</h5></div>
+
+          <!-- Après-Midi ------------------------------------------------------------------------------------------>
+          <div class="row center-xs middle-xs matin">
+            <!-- LUNDI APREM-->
+            <div class="cellule celluleColor" id="cellule6">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte6" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput6" name="image6" accept="image/*" class="file-input-js">
+                  <label for="imageInput6" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-6">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+            <!-- MARDI APREM-->
+            <div class="cellule celluleColor" id="cellule7">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte7" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput7" name="image7" accept="image/*" class="file-input-js">
+                  <label for="imageInput7" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-7">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+            <!-- MERCREDI APREM-->
+            <div class="cellule celluleColor" id="cellule8">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte8" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>            
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput8" name="image8" accept="image/*" class="file-input-js">
+                  <label for="imageInput8" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-8">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+            <!-- JEUDI APREM-->
+            <div class="cellule celluleColor" id="cellule9">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte9" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>            
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput9" name="image9" accept="image/*" class="file-input-js">
+                  <label for="imageInput9" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-9">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+            <!-- VENDREDI APREM-->
+            <div class="cellule celluleColor" id="cellule10">
+              <button class="color-apply-btn" title="Appliquer la couleur sélectionnée"></button>
+              <div>
+                <div id="zoneTexte10" contenteditable="true" class="zoneTexte editable" data-placeholder="Entrez votre texte - zone non-extensible limitée à 200 caractères" spellcheck="true"></div>
+              </div>            
+              <div class="image-upload-container middle-xs">
+                  <input type="file" id="imageInput10" name="image10" accept="image/*" class="file-input-js">
+                  <label for="imageInput10" class="custom-image-upload">
+                      <i class="fas fa-camera upload-icon"></i>
+                      <img class="upload-text" src="images/photo icon.svg" alt="" width="40%"> 
+
+                      <div class="image-frame-js"> 
+                          <img class="image-preview-js" src="" alt="Aperçu de l'image" style="display: none;" id="image-preview-10">
+                      </div>
+                      
+                  </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="ligneTab bgc5"><h5>Fin de journée - 17 h 30 (Sauf veillées)</h5></div>
+        </div>
+        <div class="page-footer">
+          <div class="date-input-container">
+              <label for="date-lundi-page-1">Lundi :</label>
+              <input class="date-input-per-page" type="date" id="date-lundi-page-1" data-page-id="1">
+          </div>
+
+          <div class="page-number-display">Page 1</div>
+        </div>
+
+        <!-- Légende -->
+        <div class="legend-planning">
+          <span class="legend-item"><span class="legend-color manual"></span> Activités manuelles</span>
+          <span class="legend-item"><span class="legend-color sport"></span> Activités sportives</span>
+          <span class="legend-item"><span class="legend-color art"></span> Activités,artistiques, culturelles, musicales ...</span>
+          <span class="legend-item"><span class="legend-color cooking"></span> Activités culinaires</span>
+
+          <span class="legend-item"><span class="legend-color outing"></span> Sortie</span>
+          <span class="legend-item"><span class="legend-color closed"></span> <span class="closed-label">Établissement fermé</span></span>
+        </div>
+
+        
+      </main>
+    </div>
+  
+<!-- Zone Outils de pagination------------------------------------------------------------------------------------------------ -->
+    <aside class="pagination-panel">
+      <div class="center-xs">
+          <h2>📄 Pagination</h2>
+          <div id="pagination-status" style="margin-bottom: 15px; font-weight: bold;">Page 1 / 1</div>
+      </div>
+
+      <div class="page-controls center-xs" style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px;">
+          <button id="add-page-btn" title="Ajouter une nouvelle semaine" style="width: 100%;">Ajouter une Page</button>
+          <button id="delete-page-btn" title="Supprimer la page actuelle" disabled style="width: 100%;">Supprimer la Page</button>
+      </div>
+      
+      <hr>
+
+      <div id="thumbnail-container" class="thumbnail-container">
+      </div>
+    </aside>
+
+  </div>
+  <script type="module" src="./js/main.js"></script> 
+
+
+</body>
+</html>
